@@ -109,7 +109,7 @@ class statsPivotTable extends \ls\pluginmanager\PluginBase
         Yii::app()->clientScript->registerScriptFile($pivotAssetUrl."/pivot.js",CClientScript::POS_BEGIN);
         Yii::app()->clientScript->registerScriptFile($pivotAssetUrl."/d3_renderers.js",CClientScript::POS_BEGIN);
         Yii::app()->clientScript->registerScriptFile($pivotAssetUrl."/c3_renderers.js",CClientScript::POS_BEGIN);
-        //~ Yii::app()->clientScript->registerScriptFile($pivotAssetUrl."/export_renderers.js",CClientScript::POS_BEGIN);
+        Yii::app()->clientScript->registerScriptFile($pivotAssetUrl."/export_renderers.js",CClientScript::POS_BEGIN);
 
         Yii::app()->clientScript->registerScriptFile($assetUrl."/statsPivotTable.js",CClientScript::POS_BEGIN);
 
@@ -160,12 +160,9 @@ class statsPivotTable extends \ls\pluginmanager\PluginBase
         $action = new stdClass();
         $action->id='remotecontrol';
         Yii::app()->controller->__set('action',$action);
+        /* Export as display */
         $oExport=new \ExportSurveyResultsService();
         $content=$oExport->exportSurvey($iSurveyId,$language, 'json-pivot',$oFormattingOptions, '');
-        //~ Yii::app()->controller->__set('action','direct');
-        //~ echo "<pre>";
-        //~ print_r(Yii::app()->controller->action);
-        //~ die("</pre>");
     }
 
     /**
