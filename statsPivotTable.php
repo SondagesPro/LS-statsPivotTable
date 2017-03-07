@@ -87,6 +87,7 @@ class statsPivotTable extends \ls\pluginmanager\PluginBase
         $jsOptions=array(
             'jsonUrl'=>Yii::app()->createUrl('plugins/direct',array(
                 'plugin'=>get_class($this),
+                'action'=>'view',
                 'sid'=>$surveyId
             )),
             'lang'=>array(
@@ -103,17 +104,17 @@ class statsPivotTable extends \ls\pluginmanager\PluginBase
         $d3AssetUrl=Yii::app()->assetManager->publish(dirname(__FILE__) . '/vendor/d3');
 
         Yii::app()->clientScript->registerScript('statsPivotTable-jsInit',$jsInit,CClientScript::POS_END);
-        Yii::app()->clientScript->registerScriptFile($d3AssetUrl."/d3.min.js",CClientScript::POS_BEGIN);
-        Yii::app()->clientScript->registerScriptFile($c3AssetUrl."/c3.min.js",CClientScript::POS_BEGIN);
+        Yii::app()->clientScript->registerScriptFile($d3AssetUrl."/d3.js",CClientScript::POS_BEGIN);
+        Yii::app()->clientScript->registerScriptFile($c3AssetUrl."/c3.js",CClientScript::POS_BEGIN);
         Yii::app()->clientScript->registerScriptFile($pivotAssetUrl."/pivot.js",CClientScript::POS_BEGIN);
-        Yii::app()->clientScript->registerScriptFile($pivotAssetUrl."/c3_renderers.min.js",CClientScript::POS_BEGIN);
-        Yii::app()->clientScript->registerScriptFile($pivotAssetUrl."/d3_renderers.min.js",CClientScript::POS_BEGIN);
-        Yii::app()->clientScript->registerScriptFile($pivotAssetUrl."/export_renderers.min.js",CClientScript::POS_BEGIN);
+        Yii::app()->clientScript->registerScriptFile($pivotAssetUrl."/d3_renderers.js",CClientScript::POS_BEGIN);
+        Yii::app()->clientScript->registerScriptFile($pivotAssetUrl."/c3_renderers.js",CClientScript::POS_BEGIN);
+        //~ Yii::app()->clientScript->registerScriptFile($pivotAssetUrl."/export_renderers.js",CClientScript::POS_BEGIN);
 
         Yii::app()->clientScript->registerScriptFile($assetUrl."/statsPivotTable.js",CClientScript::POS_BEGIN);
 
-        Yii::app()->clientScript->registerCssFile($c3AssetUrl."/c3.min.css");
-        Yii::app()->clientScript->registerCssFile($pivotAssetUrl."/pivot.min.css");
+        Yii::app()->clientScript->registerCssFile($c3AssetUrl."/c3.css");
+        Yii::app()->clientScript->registerCssFile($pivotAssetUrl."/pivot.css");
 
         Yii::app()->clientScript->registerCssFile($assetUrl."/statsPivotTable.css");
 
@@ -155,8 +156,16 @@ class statsPivotTable extends \ls\pluginmanager\PluginBase
         $oFormattingOptions->headingFormat='complete';// Maybe make own to have code + abbreviated
         $oFormattingOptions->answerFormat='long';
         $oFormattingOptions->output='display';
+        /* Hack action id to set to remotecontrol */
+        $action = new stdClass();
+        $action->id='remotecontrol';
+        Yii::app()->controller->__set('action',$action);
         $oExport=new \ExportSurveyResultsService();
         $content=$oExport->exportSurvey($iSurveyId,$language, 'json-pivot',$oFormattingOptions, '');
+        //~ Yii::app()->controller->__set('action','direct');
+        //~ echo "<pre>";
+        //~ print_r(Yii::app()->controller->action);
+        //~ die("</pre>");
     }
 
     /**

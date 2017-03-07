@@ -6,15 +6,16 @@
  */
 
 $(function(){
-    //~ var derivers = $.pivotUtilities.derivers;
-
-    //~ var renderers = $.extend(
-        //~ $.pivotUtilities.renderers,
-        //~ $.pivotUtilities.c3_renderers,
-        //~ $.pivotUtilities.d3_renderers,
-        //~ $.pivotUtilities.export_renderers
-    //~ );
+    var derivers = $.pivotUtilities.derivers;
+    var renderers = $.extend(
+        $.pivotUtilities.renderers,
+        $.pivotUtilities.c3_renderers,
+        $.pivotUtilities.d3_renderers,
+        $.pivotUtilities.export_renderers
+    );
     $.getJSON(LS.plugin.statsPivotTable.jsonUrl, function(responses) {
-        $("#pivot-table").pivotUI(responses, { });
+        $("#pivot-table").pivotUI(responses, {
+            renderers : renderers
+        });
     });
 });
