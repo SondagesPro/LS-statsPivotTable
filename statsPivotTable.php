@@ -61,7 +61,7 @@ class statsPivotTable extends \ls\pluginmanager\PluginBase
         $menuItem = new \ls\menu\MenuItem(
             array(
                 'label' => $this->_translate('Pivot table'),
-                'iconClass' => 'fa fa-table',
+                'iconClass' => 'fa fa-pie-chart',
                 'href' => $href
             )
         );
@@ -94,6 +94,7 @@ class statsPivotTable extends \ls\pluginmanager\PluginBase
 
             ),
         );
+        //~ $aSorters="";
 
         $jsInit = "var LS = LS || {};\n"
                 . "LS.plugin = LS.plugin || {};\n"
@@ -153,7 +154,7 @@ class statsPivotTable extends \ls\pluginmanager\PluginBase
         $oFormattingOptions->responseMaxRecord=SurveyDynamic::model($iSurveyId)->getMaxId();
         $oFormattingOptions->selectedColumns=$aFields;
         $oFormattingOptions->responseCompletionState='complete';
-        $oFormattingOptions->headingFormat='complete';// Maybe make own to have code + abbreviated
+        $oFormattingOptions->headingFormat='full';// Maybe make own to have code + abbreviated
         $oFormattingOptions->answerFormat='long';
         $oFormattingOptions->output='display';
         /* Hack action id to set to remotecontrol */
