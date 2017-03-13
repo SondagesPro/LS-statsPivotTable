@@ -41,6 +41,31 @@ class jsonPivotWriter extends Writer
 
     }
 
+    /**
+     * @see Writer::getFullHeading , replace with code + abbreviated heading
+     */
+    public function getFullHeading(SurveyObj $survey, FormattingOptions $oOptions, $fieldName){
+        $oOptions->headingTextLength=10;
+        $headingText=parent::getAbbreviatedHeading($survey,$oOptions,$fieldName);
+        $oOptions->useEMCode=true;
+        $headingCode=parent::getHeadingCode($survey,$oOptions,$fieldName);
+        return $headingCode." ".$headingText."";
+    }
+    /**
+     * @see Writer::getLongAnswer , replace with code + abbreviated heading
+    */
+    public function getLongAnswer(SurveyObj $oSurvey, FormattingOptions $oOptions, $fieldName,$sValue)
+    {
+        if(is_null($sValue)){
+            return '';
+        }
+        $answer= parent::getLongAnswer($oSurvey,$oOptions, $fieldName,$sValue);
+        if($this->needCode($oSurvey->fieldMap[$fieldName]['type'],$fieldName)){
+            $answer = parent::getShortAnswer($oSurvey,$oOptions, $fieldName,$sValue).":".$answer;
+        }
+        return $answer;
+    }
+
     public function close()
     {
         $sEndOutput=']';
@@ -54,4 +79,38 @@ class jsonPivotWriter extends Writer
             fclose($this->file);
         }
     }
+
+    /*
+    * Get if field need a code
+    * @param string $sFieldType : the field type
+    * @param string $sFieldName : the field name
+    * @return boolean
+    */
+    public function needCode($sFieldType,$sFieldName)
+    {
+        // Have only code : 5 point, arry 5 point, arry 10 point, language (this one can/must be fixed ?)
+        $aOnlyCode=array("5","A","B","I");
+        // Have only text : Text and numeric + file upload language (this one can/must be fixed ?)
+        $aOnlyText=array("K","N","Q","S","T","U","X",'*',';',':',"|");
+        // No field type, but some can have specific answers (date) : maybe default must be true ?
+        $aDateField=array("submitdate","startdate","datestamp");
+        $aInfoField=array("id","lastpage","startlanguage","ipaddr","refurl");
+
+        // Have other question type
+        $aOtherType=array("L","M","P","!");
+        // Have comment question type
+        $aCommentType=array("O","P");
+        if(in_array($sFieldType,$aOnlyCode))
+            return false;
+        if(in_array($sFieldType,$aOnlyText))
+            return false;
+        if(in_array($sFieldName,$aInfoField) || in_array($sFieldName,$aDateField))
+            return false;
+        if(in_array($sFieldType,$aOtherType) && substr_compare($sFieldName, "other", -5, 5) === 0)
+            return false;
+        if(in_array($sFieldType,$aCommentType))
+            return false;
+        return true;
+    }
+
 }
