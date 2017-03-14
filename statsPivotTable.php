@@ -145,6 +145,10 @@ class statsPivotTable extends \ls\pluginmanager\PluginBase
         }
         $language=\Survey::model()->findByPk($iSurveyId)->language;
         $aFields=array_keys(createFieldMap($iSurveyId,'full',true,false,$language));
+        $aFields=array_diff($aFields,
+            array('id','startlanguage','token','lastpage','submitdate')
+        );
+
         Yii::app()->loadHelper('admin/exportresults');
         Yii::import('application.helpers.viewHelper');
         Yii::setPathOfAlias(get_class($this), dirname(__FILE__));
