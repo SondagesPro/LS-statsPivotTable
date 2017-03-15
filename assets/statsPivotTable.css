@@ -4,6 +4,7 @@
  * @copyright Denis Chenu <http://www.sondages.pro>
  * @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL v3.0
  */
+/* global wrapper table */
 .pvtUi{table-layout:fixed;width:100%}
 .pvtUi tr td:first-child,.pvtVertList{width:15em}
 .pvtVals,.pvtRows{width:15em}
@@ -11,10 +12,15 @@
   list-style: none;
 }
 .pvtUi .ui-sortable-handle{width:100%;overflow:hidden;position:relative;}
-.pvtUi .pvtHorizList .ui-sortable-handle{width:16em;}
+.pvtUi .pvtHorizList .ui-sortable-handle{width:16em;display:inline-block}
 .pvtUi .ui-sortable-handle{padding-left:2em;text-align:left}
 .pvtUi .ui-sortable-handle .pvtTriangle{position:absolute;left:0.5em;top:0.5em}
-.pvtUi .pvtVertList{min-height:25em}
+.pvtUi .pvtVertList{height:25em;padding-bottom:2em}/* in td : min-height is height */
+.pvtUi .pvtRendererArea{font-size:85%}
+/* cloned wrapper table */
+#pivot-table-clone .table-bordered > tbody > tr > td {padding-bottom:0;padding-top:0;border-width:0 1px;}
+#pivot-table-clone .table-bordered {border-width:0 1px;}
+
 /* filter part */
 .pvtFilteredAttribute { font-style: italic }
 .pvtFilterBox{
@@ -25,7 +31,7 @@
 .pvtFilterBox h4{margin:0}
 .pvtFilterBox .pvtCheckContainer p { margin: 0.2em; }
 .pvtFilterBox label { font-weight: normal; }
-.pvtFilterBox .count { font-style:italic;}
+.pvtFilterBox .count { font-style:italic;font-size: 85%;}
 
 .pvtCheckContainer{
     white-space: nowrap;
@@ -38,6 +44,8 @@
 table.pvtTable {
     text-align: left;
     border-collapse: collapse;
+    width:100%;
+    table-layout:fixed;
 }
 table.pvtTable thead tr th, table.pvtTable tbody tr th {
     background-color: #e6EEEE;

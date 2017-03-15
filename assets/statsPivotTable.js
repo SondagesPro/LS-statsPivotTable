@@ -16,16 +16,24 @@ $.fn.firstWord = function() {
 };
 
 $(function(){
-    var derivers = $.pivotUtilities.derivers;
-    var renderers = $.extend(
+    var $maxRenderWidth=$("#pivot-table-clone .pvtAxisContainer").innerWidth();
+    var $derivers = $.pivotUtilities.derivers;
+    var $renderers = $.extend(
         $.pivotUtilities.renderers,
         $.pivotUtilities.c3_renderers,
         $.pivotUtilities.d3_renderers,
         $.pivotUtilities.export_renderers
     );
-    $.getJSON(LS.plugin.statsPivotTable.jsonUrl, function(responses) {
-        $("#pivot-table").pivotUI(responses, {
-            renderers : renderers,
+    $.getJSON(LS.plugin.statsPivotTable.jsonUrl, function($responses) {
+        $("#pivot-table").pivotUI($responses, {
+            renderers : $renderers,
+            rendererOptions: {
+              c3: {
+                size : {
+                  width:$maxRenderWidth-10,
+                }
+              },
+            },
             onRefresh: function() {
                 $("#pivot-table-construct").fadeOut(400).remove();
                 $("#pivot-table .pvtUi").addClass('table table-condensed table-bordered');
@@ -41,7 +49,7 @@ $(function(){
                 $("#pivot-table .pvtFilterBox h4").addClass("panel-heading");
                 $("#pivot-table .pvtFilterBox .pvtCheckContainer").addClass("panel-body");
                 $("#pivot-table .pvtFilterBox > p").addClass("panel-footer");
-                $("#pivot-table .pvtFilterBox .count").addClass("badge");
+                $("#pivot-table .pvtFilterBox .count").addClass("badge small");
                 /* Commented : this brokepivotable.js
                 $("#pivot-table").find(".ui-sortable-handle").each(function(){
                     $(this).firstWord();
