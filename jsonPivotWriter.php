@@ -45,7 +45,7 @@ class jsonPivotWriter extends Writer
      * @see Writer::getFullHeading , replace with code + abbreviated heading
      */
     public function getFullHeading(SurveyObj $survey, FormattingOptions $oOptions, $fieldName){
-        $oOptions->headingTextLength=10;
+        $oOptions->headingTextLength=30;
         $headingText=parent::getAbbreviatedHeading($survey,$oOptions,$fieldName);
         $oOptions->useEMCode=true;
         $headingCode=parent::getHeadingCode($survey,$oOptions,$fieldName);
@@ -90,6 +90,8 @@ class jsonPivotWriter extends Writer
     {
         // Have only code : 5 point, arry 5 point, arry 10 point, language (this one can/must be fixed ?)
         $aOnlyCode=array("5","A","B","I");
+        // Not need code
+        $aNotneedCode=array("G","Y");
         // Have only text : Text and numeric + file upload language (this one can/must be fixed ?)
         $aOnlyText=array("K","N","Q","S","T","U","X",'*',';',':',"|");
         // No field type, but some can have specific answers (date) : maybe default must be true ?
@@ -101,6 +103,8 @@ class jsonPivotWriter extends Writer
         // Have comment question type
         $aCommentType=array("O","P");
         if(in_array($sFieldType,$aOnlyCode))
+            return false;
+        if(in_array($sFieldType,$aNotneedCode))
             return false;
         if(in_array($sFieldType,$aOnlyText))
             return false;

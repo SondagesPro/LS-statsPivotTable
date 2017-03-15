@@ -115,7 +115,7 @@ class statsPivotTable extends \ls\pluginmanager\PluginBase
         Yii::app()->clientScript->registerScriptFile($assetUrl."/statsPivotTable.js",CClientScript::POS_BEGIN);
 
         Yii::app()->clientScript->registerCssFile($c3AssetUrl."/c3.css");
-        Yii::app()->clientScript->registerCssFile($pivotAssetUrl."/pivot.css");
+        //Yii::app()->clientScript->registerCssFile($pivotAssetUrl."/pivot.css");
 
         Yii::app()->clientScript->registerCssFile($assetUrl."/statsPivotTable.css");
 
