@@ -15,7 +15,8 @@ $(function(){
     );
     $.getJSON(LS.plugin.statsPivotTable.jsonUrl, function(responses) {
         $("#pivot-table").pivotUI(responses, {
-            renderers : renderers
+            renderers : renderers,
+            hiddenAttributes : ['id','token','lastpage','submitdate']
         });
     });
 });
