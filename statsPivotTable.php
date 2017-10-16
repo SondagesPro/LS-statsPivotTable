@@ -2,14 +2,14 @@
 
 /**
  * statsPivotTable
- *
+ * @version 1.0.1
  *
  * @category Plugin
  */
 
 class statsPivotTable extends \ls\pluginmanager\PluginBase
 {
-    static protected $description = 'See dynamic statitics with pivot table';
+    static protected $description = 'See dynamic statistics with pivot table';
     static protected $name = 'statsPivotTable';
 
     protected $storage = 'DbStorage';
@@ -21,10 +21,6 @@ class statsPivotTable extends \ls\pluginmanager\PluginBase
      */
     public function init()
     {
-        //~ $this->subscribe('newDirectRequest');
-        //~ $this->subscribe('afterSurveyMenuLoad');
-        /* To add the menu icon in javascript */
-        //~ $this->subscribe('beforeControllerAction');
         /* Add language */
         $this->subscribe('beforeToolsMenuRender');
 
@@ -47,25 +43,26 @@ class statsPivotTable extends \ls\pluginmanager\PluginBase
     {
         $event = $this->getEvent();
         $surveyId = $event->get('surveyId');
+        if(Permission::model()->hasSurveyPermission($surveyId,'statistics','read')){
+            $href = Yii::app()->createUrl(
+                'admin/pluginhelper',
+                array(
+                    'sa' => 'sidebody',
+                    'plugin' => get_class($this),
+                    'method' => 'actionIndex',
+                    'surveyId' => $surveyId
+                )
+            );
 
-        $href = Yii::app()->createUrl(
-            'admin/pluginhelper',
-            array(
-                'sa' => 'sidebody',
-                'plugin' => get_class($this),
-                'method' => 'actionIndex',
-                'surveyId' => $surveyId
-            )
-        );
-
-        $menuItem = new \ls\menu\MenuItem(
-            array(
-                'label' => $this->_translate('Pivot table'),
-                'iconClass' => 'fa fa-pie-chart',
-                'href' => $href
-            )
-        );
-        $event->append('menuItems', array($menuItem));
+            $menuItem = new \ls\menu\MenuItem(
+                array(
+                    'label' => $this->_translate('Pivot table'),
+                    'iconClass' => 'fa fa-pie-chart',
+                    'href' => $href
+                )
+            );
+            $event->append('menuItems', array($menuItem));
+        }
     }
 
     /**
@@ -77,7 +74,7 @@ class statsPivotTable extends \ls\pluginmanager\PluginBase
     public function actionIndex($surveyId)
     {
         if(!Permission::model()->hasSurveyPermission($surveyId,'statistics','read')){
-            throw new CHttpException(401);
+            throw new CHttpException(403);
         }
         $aData=array();
         /* Language part */
