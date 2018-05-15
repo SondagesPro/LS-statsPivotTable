@@ -1,0 +1,15 @@
+{
+    "name": "SondagesPro/statsPivotTable",
+    "description": "",
+    "type": "limesurvey-plugin",
+    "homepage": "https://framagit.org/SondagePro-LimeSurvey-plugin/statsPivotTable",
+    "license": "AGPL-3.0+",
+    "authors": [
+        {
+            "name": "Denis Chenu",
+            "email": "contact@sondages.pro"
+        }
+    ],
+    "minimum-stability": "beta",
+    "require": {}
+}
