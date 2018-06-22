@@ -93,7 +93,7 @@ class jsonPivotWriter extends Writer
         // Not need code
         $aNotneedCode=array("G","Y");
         // Have only text : Text and numeric + file upload language (this one can/must be fixed ?)
-        $aOnlyText=array("K","N","Q","S","T","U","X",'*',';',':',"|");
+        $aOnlyText=array("K","N","Q","S","T","U","X",'*',';',':',"|","D");
         // No field type, but some can have specific answers (date) : maybe default must be true ?
         $aDateField=array("submitdate","startdate","datestamp");
         $aInfoField=array("id","lastpage","startlanguage","ipaddr","refurl");

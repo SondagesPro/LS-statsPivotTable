@@ -1,13 +1,12 @@
 <?php
-
 /**
  * statsPivotTable
- * @version 1.0.1
+ * @version 1.1.0
  *
  * @category Plugin
  */
 
-class statsPivotTable extends \ls\pluginmanager\PluginBase
+class statsPivotTable extends PluginBase
 {
     static protected $description = 'See dynamic statistics with pivot table';
     static protected $name = 'statsPivotTable';
@@ -53,14 +52,16 @@ class statsPivotTable extends \ls\pluginmanager\PluginBase
                     'surveyId' => $surveyId
                 )
             );
-
-            $menuItem = new \ls\menu\MenuItem(
-                array(
-                    'label' => $this->_translate('Pivot table'),
-                    'iconClass' => 'fa fa-pie-chart',
-                    'href' => $href
-                )
+            $aMenuItem = array(
+                'label' => $this->_translate('Pivot table'),
+                'iconClass' => 'fa fa-pie-chart',
+                'href' => $href
             );
+            if (class_exists("\LimeSurvey\Menu\MenuItem")) {
+                $menuItem = new \LimeSurvey\Menu\MenuItem($aMenuItem);
+            } else {
+                $menuItem = new \ls\menu\MenuItem($aMenuItem);
+            }
             $event->append('menuItems', array($menuItem));
         }
     }
@@ -141,9 +142,14 @@ class statsPivotTable extends \ls\pluginmanager\PluginBase
             return;
         }
         $language=\Survey::model()->findByPk($iSurveyId)->language;
-        $aFields=array_keys(createFieldMap($iSurveyId,'full',true,false,$language));
+        /* Api updated for createFieldMap */
+        $survey = \Survey::model()->findByPk($iSurveyId);
+        if(intval(Yii::app()->getConfig('versionnumber')) < 3) {
+            $survey = $iSurveyId;
+        }
+        $aFields=array_keys(createFieldMap($survey,'full',true,false,$language));
         $aFields=array_diff($aFields,
-            array('id','startlanguage','token','lastpage','submitdate')
+            array('id','startlanguage','token','lastpage','submitdate','seed')
         );
 
         Yii::app()->loadHelper('admin/exportresults');
