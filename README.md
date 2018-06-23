@@ -10,16 +10,16 @@ This allow to use [Pivottable.js](https://pivottable.js.org) to have a lot of in
 
 ### Via GIT
 - Go to your LimeSurvey Directory
-- Clone in plugins/statsPivotTable directory : `git clone https://git.framasoft.org/SondagePro-LimeSurvey-plugin/statsPivotTable.git statsPivotTable`
+- Clone in plugins/statsPivotTable directory : `git clone https://gitlab.com/SondagesPro/ExportAndStats/statsPivotTable.git statsPivotTable`
 
 ### Via ZIP dowload
-- Download <http://extensions.sondages.pro/IMG/auto/statsPivotTable.zip>
+- Download <https://extensions.sondages.pro/IMG/auto/statsPivotTable.zip>
 - Extract : `unzip statsPivotTable.zip`
 - Move the directory to  plugins/ directory inside LimeSurvey
 
 ## Home page & Copyright
-- HomePage <http://extensions.sondages.pro/>
-- Copyright © 2017 Denis Chenu <http://sondages.pro>
+- HomePage <https://extensions.sondages.pro/>
+- Copyright © 2017 Denis Chenu <https://sondages.pro>
 - Licence : GNU Affero General Public License <https://www.gnu.org/licenses/agpl-3.0.html>
 - This plugin use
     - [Pivottable.js](https://pivottable.js.org) © 2012-2013 Nicolas Kruchten, Datacratic, other contributors.
