@@ -19,8 +19,9 @@ This allow to use [Pivottable.js](https://pivottable.js.org) to have a lot of in
 
 ## Home page & Copyright
 - HomePage <https://extensions.sondages.pro/>
-- Copyright © 2017-2018 Denis Chenu <https://sondages.pro>
+- Copyright © 2017-2019 Denis Chenu <https://sondages.pro>
 - Licence : GNU Affero General Public License <https://www.gnu.org/licenses/agpl-3.0.html>
+- Without your help, this pugin can not have a developer: [![Donate](https://liberapay.com/assets/widgets/donate.svg)](https://liberapay.com/SondagesPro/) : [Donate on Liberapay](https://liberapay.com/SondagesPro/)
 - This plugin use
     - [Pivottable.js](https://pivottable.js.org) © 2012-2013 Nicolas Kruchten, Datacratic, other contributors.
     - [D3.js](https://d3js.org/) © 2010-2016, Michael Bostock.
