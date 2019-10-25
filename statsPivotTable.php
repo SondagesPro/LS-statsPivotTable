@@ -1,7 +1,7 @@
 <?php
 /**
  * statsPivotTable
- * @version 1.1.0
+ * @version 1.1.1
  *
  * @category Plugin
  */
@@ -170,7 +170,15 @@ class statsPivotTable extends PluginBase
         Yii::app()->controller->__set('action',$action);
         /* Export as display */
         $oExport=new \ExportSurveyResultsService();
-        $content=$oExport->exportSurvey($iSurveyId,$language, 'json-pivot',$oFormattingOptions, '');
+        if(is_callable(array($oExport,'exportResponses'))) {
+            $content=$oExport->exportResponses($iSurveyId,$language, 'json-pivot',$oFormattingOptions, '');
+            return;
+        }
+        if(is_callable(array($oExport,'exportSurvey'))) {
+            $content=$oExport->exportSurvey($iSurveyId,$language, 'json-pivot',$oFormattingOptions, '');
+            return;
+        }
+        throw new CHttpException(500,"No ExportSurveyResultsService know callable method found");
     }
 
     /**
